@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/MoneyTracker/price.db
+/MoneyTracker/price.db-shm
+/MoneyTracker/price.db-wal
