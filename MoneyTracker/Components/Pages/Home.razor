@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inherits LayoutComponentBase
+@using MoneyTracker.Models;
 
 <PageTitle>Home</PageTitle>
 
@@ -7,13 +8,42 @@
 
 Welcome to your new app.
 
+<EditForm Model="@priceActivity" OnValidSubmit="SubmitForm">
+    <div>
+        <label>Name</label>
+        <InputText @bind-Value="priceActivity.Name" />
+    </div>
+    <div>
+        <label>Date</label>
+        <InputDate @bind-Value="priceActivity.Time" />
+    </div>
+    <div>
+        <label>Price</label>
+        <InputNumber @bind-Value="priceActivity.Price" />
+    </div>
+    <div>
+        <label>T</label>
+        <InputNumber @bind-Value="priceActivity.Type" />
+    </div>
+    <Button onclick="@SubmitForm">Test</Button>
+</EditForm>
+
 <BarChart @ref="barChart" Class="mb-4" />
 
+@inject Context.PriceAppContext dbContext;
 @code {
+    private PriceActivity priceActivity = new PriceActivity();
     private BarChart barChart;
 
     protected override async Task OnInitializedAsync()
     {
+    }
+
+    async Task SubmitForm()
+    {
+        await dbContext.Activities.AddAsync(priceActivity);
+        await dbContext.SaveChangesAsync();
+        priceActivity = new PriceActivity();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)

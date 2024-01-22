@@ -1,11 +1,16 @@
+using Microsoft.EntityFrameworkCore;
 using MoneyTracker.Components;
+using MoneyTracker.Context;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddBlazorBootstrap();
+
+builder.Services.AddDbContext<PriceAppContext>(opt =>  opt.UseSqlite(config.GetConnectionString("default")));
 
 var app = builder.Build();
 

@@ -3,9 +3,9 @@ using MoneyTracker.Models;
 
 namespace MoneyTracker.Context
 {
-    public class AppContext : DbContext
+    public class PriceAppContext : DbContext
     {
-        public AppContext(DbContextOptions options) : base(options)
+        public PriceAppContext(DbContextOptions options) : base(options)
         {
         }
 
