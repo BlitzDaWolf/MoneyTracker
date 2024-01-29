@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MoneyTracker.Components;
 using MoneyTracker.Context;
+using MoneyTracker.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;

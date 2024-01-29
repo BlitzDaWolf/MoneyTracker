@@ -23,12 +23,25 @@ Welcome to your new app.
     </div>
     <div>
         <label>T</label>
-        <InputNumber @bind-Value="priceActivity.Type" />
+        <!-- <InputNumber @bind-Value="priceActivity.Type" /> -->
+        <InputSelect @bind-Value="priceActivity.Type">
+            <option selected value="0">payment</option>
+            <option value="1">Debt</option>
+            <option value="2">Food</option>
+            <option value="3">Health</option>
+            <option value="4">Incurence</option>
+            <option value="5">Transport</option>
+            <option value="6">Fittness</option>
+            <option value="7">Solidaris</option>
+            <option value="8">PayPal</option>
+            <option value="9">Misc</option>
+            <option value="10">Investments</option>
+            <option value="11">Utilities</option>
+            <option value="12">Income</option>
+        </InputSelect>
     </div>
     <Button onclick="@SubmitForm">Test</Button>
 </EditForm>
-
-<BarChart @ref="barChart" Class="mb-4" />
 
 @inject Context.PriceAppContext dbContext;
 @code {
@@ -44,60 +57,5 @@ Welcome to your new app.
         await dbContext.Activities.AddAsync(priceActivity);
         await dbContext.SaveChangesAsync();
         priceActivity = new PriceActivity();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await RenderManhattanAsync();
-        }
-
-        await base.OnAfterRenderAsync(firstRender);
-    }
-
-    private async Task RenderManhattanAsync()
-    {
-        var data = new ChartData
-            {
-                Labels = new List<string> { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" },
-                Datasets = new List<IChartDataset>()
-                {
-                    new BarChartDataset()
-                    {
-                        Label = "India",
-                        Data = new List<double>{ 9, 11, 9, 4, 17, 16, 9, 11, 5, 14, 15, 6, 15, 9, 6, 8, 13, 3, 4, 11 },
-                        BackgroundColor = new List<string>{ "rgb(88, 80, 141)" },
-                        CategoryPercentage = 0.8,
-                        BarPercentage = 1,
-                    },
-                    new BarChartDataset()
-                    {
-                        Label = "England",
-                        Data = new List<double>{ 1, 0, 7, 11, 5, 2, 13, 8, 9, 10, 7, 13, 7, 5, 9, 5, 10, 5, 11, 2 },
-                        BackgroundColor = new List<string> { "rgb(255, 166, 0)" },
-                        CategoryPercentage = 0.8,
-                        BarPercentage = 1,
-                    }
-                }
-            };
-
-        var options = new BarChartOptions();
-
-        options.Interaction.Mode = InteractionMode.Index;
-
-        options.Plugins.Title.Text = "MANHATTAN";
-        options.Plugins.Title.Display = true;
-        options.Plugins.Title.Font.Size = 20;
-
-        options.Responsive = true;
-
-        options.Scales.X.Title.Text = "Overs";
-        options.Scales.X.Title.Display = true;
-
-        options.Scales.Y.Title.Text = "Runs";
-        options.Scales.Y.Title.Display = true;
-
-        await barChart.InitializeAsync(data, options);
     }
 }
